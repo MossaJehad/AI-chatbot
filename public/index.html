@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link href="./style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+
+    <h1 class="textarea-button-container">
+      AI Chatbot
+    </h1>
+
+    <div id="chatbot" class="divit"></div>
+    
+    <div id="svgs">
+      <div id="share" class="action-button">
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
+          <path d="M 18 2 A 3 3 0 0 0 15 5 A 3 3 0 0 0 15.054688 5.5605469 L 7.9394531 9.7109375 A 3 3 0 0 0 6 9 A 3 3 0 0 0 3 12 A 3 3 0 0 0 6 15 A 3 3 0 0 0 7.9355469 14.287109 L 15.054688 18.439453 A 3 3 0 0 0 15 19 A 3 3 0 0 0 18 22 A 3 3 0 0 0 21 19 A 3 3 0 0 0 18 16 A 3 3 0 0 0 16.0625 16.712891 L 8.9453125 12.560547 A 3 3 0 0 0 9 12 A 3 3 0 0 0 8.9453125 11.439453 L 16.060547 7.2890625 A 3 3 0 0 0 18 8 A 3 3 0 0 0 21 5 A 3 3 0 0 0 18 2 z"></path>
+        </svg>
+      </div>
+      
+      <div id="copy" class="action-button">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 111.07 122.88" style="enable-background:new 0 0 111.07 122.88" xml:space="preserve"><g><path class="st0" d="M97.67,20.81L97.67,20.81l0.01,0.02c3.7,0.01,7.04,1.51,9.46,3.93c2.4,2.41,3.9,5.74,3.9,9.42h0.02v0.02v75.28 v0.01h-0.02c-0.01,3.68-1.51,7.03-3.93,9.46c-2.41,2.4-5.74,3.9-9.42,3.9v0.02h-0.02H38.48h-0.01v-0.02 c-3.69-0.01-7.04-1.5-9.46-3.93c-2.4-2.41-3.9-5.74-3.91-9.42H25.1c0-25.96,0-49.34,0-75.3v-0.01h0.02 c0.01-3.69,1.52-7.04,3.94-9.46c2.41-2.4,5.73-3.9,9.42-3.91v-0.02h0.02C58.22,20.81,77.95,20.81,97.67,20.81L97.67,20.81z M0.02,75.38L0,13.39v-0.01h0.02c0.01-3.69,1.52-7.04,3.93-9.46c2.41-2.4,5.74-3.9,9.42-3.91V0h0.02h59.19 c7.69,0,8.9,9.96,0.01,10.16H13.4h-0.02v-0.02c-0.88,0-1.68,0.37-2.27,0.97c-0.59,0.58-0.96,1.4-0.96,2.27h0.02v0.01v3.17 c0,19.61,0,39.21,0,58.81C10.17,83.63,0.02,84.09,0.02,75.38L0.02,75.38z M100.91,109.49V34.2v-0.02h0.02 c0-0.87-0.37-1.68-0.97-2.27c-0.59-0.58-1.4-0.96-2.28-0.96v0.02h-0.01H38.48h-0.02v-0.02c-0.88,0-1.68,0.38-2.27,0.97 c-0.59,0.58-0.96,1.4-0.96,2.27h0.02v0.01v75.28v0.02h-0.02c0,0.88,0.38,1.68,0.97,2.27c0.59,0.59,1.4,0.96,2.27,0.96v-0.02h0.01 h59.19h0.02v0.02c0.87,0,1.68-0.38,2.27-0.97c0.59-0.58,0.96-1.4,0.96-2.27L100.91,109.49L100.91,109.49L100.91,109.49 L100.91,109.49z"/></g>
+        </svg>
+      </div>
+    </div>
+    
+    <form id="form" class="textarea-button-container">
+      <label for="prompt"></label>
+      <textarea class="textarea" placeholder="Type your message here." name="prompt" id="prompt" maxlength="172"></textarea>
+      <div class="button-wrapper">
+        <div class="button-shadow"></div>
+        <button type="submit" class="button">Send</button>
+      </div>
+    </form>
+
+    <script>
+      const form = document.getElementById('form');
+      form.addEventListener('submit', async (e) => {
+        showwait();
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        
+        try {
+          const response = await fetch('http://localhost:6066/dream', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ prompt: formData.get('prompt') }),
+          });
+
+        const resContent = await response.json();
+        console.log('Response content:', resContent);
+        document.getElementById('chatbot').innerText = resContent.result;
+        } catch (error) {
+            console.error('Error during request:', error);
+            res.status(500).send('Error during request');
+        } finally {
+            hidewait();
+        }
+      });
+
+      document.getElementById("share").addEventListener("click", function() {
+        const prompt = document.getElementById('prompt').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('prompt', prompt);
+
+        if (navigator.share) {
+          navigator.share({
+            title: 'Check this out!',
+            url: url.toString()
+          }).catch(err => console.log('Error sharing:', err));
+        } else {
+          alert('Share feature is not supported in this browser.');
+        }
+      });
+
+      document.getElementById("copy").addEventListener("click", function() {
+        const chatbotContent = document.getElementById('chatbot').innerText;
+        navigator.clipboard.writeText(chatbotContent)
+          .then(() => alert('Text copied to clipboard'))
+          .catch(err => console.error('Failed to copy text: ', err));
+      });
+
+      const btn = document.querySelector('button');
+      function showwait() {
+        btn.style.backgroundColor = 'gray';
+        btn.disabled = true;
+        btn.innerText = 'Wait...';
+        
+      }
+
+      function hidewait() {
+        btn.style.backgroundColor = '#90ee90';
+        btn.disabled = false;
+        btn.innerText = 'Send';
+      }
+
+    </script>
+  </body>
+</html>

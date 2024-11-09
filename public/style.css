@@ -1,0 +1,152 @@
+@font-face {
+  font-family: 'ATCArquette';
+  src: url('../public/fonts/ATCArquette-Black.otf') format('opentype');
+  font-weight: bold;
+}
+
+.button-wrapper {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  width: 72%;
+}
+
+.button {
+  cursor: pointer;
+  background-color: #90ee90;
+  border: 2px solid black;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  font-weight: bolder;
+  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+  transition: top 0.1s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button-shadow {
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid black;
+  z-index: 1;
+}
+
+.button-wrapper:hover .button {
+  cursor: pointer;
+  top: +2px;
+}
+
+.textarea {
+  width: 70%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  outline: 0;
+  resize: vertical;
+  transition: border-color .3s ease, box-shadow .3s ease
+}
+
+.textarea:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, .5)
+}
+
+.textarea-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  gap: 16px;
+  width: 72%
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'ATCArquette', sans-serif;
+  line-height: 1.5;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 2rem
+}
+
+button,
+textarea {
+  font-family: Inter, sans-serif
+}
+
+#ai-response {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #444
+}
+
+.divit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  border: #769e78 2px solid;
+  border-radius: 7px;
+  width: 50%
+
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.action-button {
+  padding: 10px;
+  color: #333;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+
+
+#svgs {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+  margin-right: 47%;
+}
+
+svg {
+  width: 20px;
+  height: 20px;
+  border: #fff 5px solid;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+svg:hover {
+  border: #f7f7f7 5px solid;
+  background-color: #f7f7f7;
+}
